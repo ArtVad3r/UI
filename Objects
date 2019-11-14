@@ -20,7 +20,6 @@ animal
 
 ### Priklad 2: instances
 ____________________________________
-
 CLIPS> (defclass person (is-a USER) 
          (multislot full-name)
          (slot age (type NUMBER))
