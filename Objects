@@ -70,6 +70,10 @@ CLIPS> (send [Barbara] print)
 
 ### Príklad 4
 ____________________________________
+(defmessage-handler <class-name> <message-name> [handler type]
+  [optional-comment]
+    (<parameters>* [wildcard-parameter])
+
 (defmessage-handler NUMBER + (?arg)
   (+ ?self ?arg))
 CLIPS> (send 3 + 11)
