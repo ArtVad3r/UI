@@ -1,14 +1,14 @@
 ### Priklad 1: classes
 ____________________________________
-CLIPS> (defclass animal (is-a OBJECT))
-CLIPS> (defclass mammal (is-a animal))
-CLIPS> (defclass bird (is-a animal))
-CLIPS> (defclass reptile (is-a animal))
-CLIPS> (defclass fish (is-a animal))
-CLIPS> (defclass eagle (is-a bird))
-CLIPS> (defclass dog (is-a mammal))
-CLIPS> (defclass snake (is-a reptile))
-CLIPS> (browse-classes animal)
+(defclass animal (is-a OBJECT))
+(defclass mammal (is-a animal))
+(defclass bird (is-a animal))
+(defclass reptile (is-a animal))
+(defclass fish (is-a animal))
+(defclass eagle (is-a bird))
+(defclass dog (is-a mammal))
+(defclass snake (is-a reptile))
+(browse-classes animal)
 animal
   mammal
     dog
@@ -20,61 +20,46 @@ animal
 
 ### Priklad 2: instances
 ____________________________________
-CLIPS> (defclass person (is-a USER) 
+(defclass person (is-a USER) 
          (multislot full-name)
          (slot age (type NUMBER))
          (slot sex))
-CLIPS> (make-instance Amy of person 
+(make-instance Amy of person 
          (full-name Amy Johnson)
          (age 35)
          (sex female))
-[Amy]
-CLIPS> (make-instance John of person
+(make-instance John of person
          (full-name John Donatello)
          (age 20)
          (sex male))
-[John]
-CLIPS> (defmessage-handler person write-age () 
+(defmessage-handler person write-age () 
          (printout t "The age of " ?self:full-name " is " ?self:age crlf))
-CLIPS> (send [Amy] write-age)
-The age of (Amy Johnson) is 35
-CLIPS> (send [John] write-age)
-The age of (John Donatello) is 20
+(send [Amy] write-age)
+(send [John] write-age)
 
 ### Priklad 3: Spravy
 ____________________________________
-CLIPS> (defclass person (is-a USER) (multislot full-name) (slot age) (slot sex (allowed-symbols male female)))
-CLIPS> (make-instance John of person (full-name John Kowalsky) (age 44) (sex male)))
-[John]
-CLIPS> (make-instance Barbara of person (full-name Barbara Nowak) (age 23) (sex female)))
-[Barbara]
-CLIPS> (instances)
-[John] of person
-[Barbara] of person
-For a total of 2 instances.
-CLIPS> (unmake-instance John)
-TRUE
-CLIPS> (instances)
-[Barbara] of person
-For a total of 1 instance.
-CLIPS> (send [Barbara] get-full-name)
-(Barbara Nowak)
-CLIPS> (send [Barbara] put-full-name Barbara Kowalsky)
-(Barbara Kowalsky)
-CLIPS> (send [Barbara] print)
-[Barbara] of person
-(full-name Barbara Kowalsky)
-(age 23)
-(sex female)
+(defclass person (is-a USER) 
+	(multislot full-name) 
+	(slot age) 
+	(slot sex (allowed-symbols male female)))
+(make-instance John of person 
+	(full-name John Kowalsky) 
+	(age 44) 
+	(sex male)))
+(make-instance Barbara of person 
+	(full-name Barbara Nowak) 
+	(age 23) 
+	(sex female)))
+(instances)
+(unmake-instance John)
+(instances)
+(send [Barbara] get-full-name)
+(send [Barbara] put-full-name Barbara Kowalsky)
+(send [Barbara] print)
 
 ### Príklad 4
 ____________________________________
-(defmessage-handler <class-name> <message-name> [handler type]
-  [optional-comment]
-    (<parameters>* [wildcard-parameter])
-
 (defmessage-handler NUMBER + (?arg)
   (+ ?self ?arg))
-CLIPS> (send 3 + 11)
-14
-
+(send 3 + 11)
